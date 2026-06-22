@@ -372,7 +372,7 @@ int main(int argc, char **argv) {
 
       constexpr float kAudioGoalCandidateThreshold = 0.55f;
       constexpr double kMinCandidateGapSec = 5.0;
-      constexpr double kVisualConfirmationDelaySec = 5.75;
+      constexpr double kVisualConfirmationDelaySec = 3.75;
 
       const double t_now = clock.now_sec();
 
