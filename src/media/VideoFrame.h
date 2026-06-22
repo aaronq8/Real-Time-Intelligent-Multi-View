@@ -5,17 +5,7 @@ extern "C" {
 #include <libavutil/pixfmt.h>
 }
 
-#include <memory>
-
-struct AVFrameDeleter {
-  void operator()(AVFrame *frame) const {
-    if (frame) {
-      av_frame_free(&frame);
-    }
-  }
-};
-
-using AVFramePtr = std::unique_ptr<AVFrame, AVFrameDeleter>;
+#include "AVFramePtr.h"
 
 struct VideoFrame {
   int stream_id = -1;

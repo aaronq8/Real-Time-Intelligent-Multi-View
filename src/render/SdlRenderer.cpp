@@ -2,26 +2,42 @@
 
 #include <SDL2/SDL.h>
 
+#include <iostream>
 #include <stdexcept>
-
 void SdlRenderer::compute_layout_rects() {
-  const int small_w = window_width_ / 3;
-  const int small_h = window_height_ / 2;
+  const int big_w = (window_width_ * 2) / 3;
+  const int small_w = window_width_ - big_w;
 
-  big_rect_.x = 0;
-  big_rect_.y = 0;
-  big_rect_.w = window_width_ - small_w;
-  big_rect_.h = window_height_;
+  const int top_h = window_height_ / 2;
+  const int bottom_h = window_height_ - top_h;
 
-  small_rects_[0].x = big_rect_.w;
-  small_rects_[0].y = 0;
-  small_rects_[0].w = small_w;
-  small_rects_[0].h = small_h;
+  big_rect_ = SDL_Rect{
+      .x = 0,
+      .y = 0,
+      .w = big_w,
+      .h = window_height_,
+  };
 
-  small_rects_[1].x = big_rect_.w;
-  small_rects_[1].y = small_h;
-  small_rects_[1].w = small_w;
-  small_rects_[1].h = window_height_ - small_h;
+  small_rects_[0] = SDL_Rect{
+      .x = big_w,
+      .y = 0,
+      .w = small_w,
+      .h = top_h,
+  };
+
+  small_rects_[1] = SDL_Rect{
+      .x = big_w,
+      .y = top_h,
+      .w = small_w,
+      .h = bottom_h,
+  };
+  std::cout << "[layout]\n"
+            << "  big: x=" << big_rect_.x << " y=" << big_rect_.y
+            << " w=" << big_rect_.w << " h=" << big_rect_.h << "\n"
+            << "  small0: x=" << small_rects_[0].x << " y=" << small_rects_[0].y
+            << " w=" << small_rects_[0].w << " h=" << small_rects_[0].h << "\n"
+            << "  small1: x=" << small_rects_[1].x << " y=" << small_rects_[1].y
+            << " w=" << small_rects_[1].w << " h=" << small_rects_[1].h << "\n";
 }
 
 SdlRenderer::SdlRenderer(int window_width, int window_height)

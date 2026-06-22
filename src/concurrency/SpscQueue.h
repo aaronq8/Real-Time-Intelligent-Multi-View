@@ -13,7 +13,7 @@ public:
 
   SpscQueue(const SpscQueue &) = delete;
   SpscQueue &operator=(const SpscQueue &) = delete;
-
+  size_t size() { return queue_.read_available(); }
   bool push_blocking(const T &item) {
     while (!closed_.load(std::memory_order_acquire)) {
       if (queue_.push(item)) {

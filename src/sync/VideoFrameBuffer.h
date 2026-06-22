@@ -4,7 +4,6 @@
 
 #include <cstddef>
 #include <deque>
-#include <iostream>
 #include <memory>
 
 class VideoFrameBuffer {

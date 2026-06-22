@@ -9,8 +9,6 @@ extern "C" {
 #include <iostream>
 #include <stdexcept>
 
-namespace {
-
 AVFramePtr make_avframe() {
   AVFrame *raw = av_frame_alloc();
 
@@ -20,8 +18,6 @@ AVFramePtr make_avframe() {
 
   return AVFramePtr(raw);
 }
-
-} // namespace
 
 VideoDecoder::VideoDecoder(MediaInput &input, int stream_id)
     : input_(input), stream_id_(stream_id) {}

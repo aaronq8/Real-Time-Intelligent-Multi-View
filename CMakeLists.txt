@@ -21,8 +21,14 @@ add_executable(RT-IMV
     src/media/FfmpegUtil.cpp
     src/media/MediaInput.cpp
     src/decoder/VideoDecoder.cpp
+    src/decoder/AudioDecoder.cpp
     src/decoder/VideoDecodeWorker.cpp
-    src/render/SdlRenderer.cpp)
+    src/render/SdlRenderer.cpp
+    src/decoder/AudioExcitementScorer.cpp
+    src/app/BigStreamSelector.cpp
+    src/decoder/AudioFrameConverter.cpp
+    src/decoder/AudioDecodeWorker.cpp
+    src/vision/VisualFeatureExtractor.cpp)
 
 target_include_directories(RT-IMV PRIVATE 
     src/app
@@ -30,7 +36,8 @@ target_include_directories(RT-IMV PRIVATE
     src/decoder
     src/media
     src/render
-    src/sync)
+    src/sync
+    src/vision)
 
 
 
