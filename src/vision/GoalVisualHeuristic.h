@@ -92,39 +92,43 @@ public:
         (out.low_green_duration_sec >= kMinLowGreenDurationSec ||
          out.green_replay_min <= kVeryLowFieldVisibility);
 
-    out.confirmed = out.visual_score >= kMinVisualScore &&
-                    (early_confirmed || replay_confirmed);
+    const bool fast_replay_confirmed =
+        out.green_before >= kMinFieldBeforeForReplay &&
+        out.green_replay_min <= kVeryLowFieldVisibility;
+
+    out.confirmed =
+        fast_replay_confirmed || (out.visual_score >= kMinVisualScore &&
+                                  (early_confirmed || replay_confirmed));
 
     return out;
   }
 
 private:
+  // GoalVisualHeuristic.h
   static constexpr double kBeforeWindowSec = 3.0;
 
-  // Immediate player close-up / celebration window.
   static constexpr double kEarlyAfterDelaySec = 0.5;
-  static constexpr double kEarlyAfterWindowSec = 4.0;
+  static constexpr double kEarlyAfterWindowSec = 3.25;
 
-  // Short delayed replay / broadcast reaction window.
-  // For a candidate at 6.2s, this checks roughly 9.2s - 11.7s.
-  static constexpr double kReplayAfterStartSec = 3.0;
-  static constexpr double kReplayAfterEndSec = 5.5;
+  static constexpr double kReplayAfterStartSec = 2.25;
+  static constexpr double kReplayAfterEndSec = 3.75;
 
   static constexpr size_t kMinSamplesBefore = 4;
-  static constexpr size_t kMinSamplesAfter = 4;
+  static constexpr size_t kMinSamplesAfter = 3;
 
-  static constexpr float kMinEarlyGreenDrop = 0.12f;
-  static constexpr float kMinReplayGreenDrop = 0.20f;
-  static constexpr float kStrongGreenDrop = 0.40f;
+  static constexpr float kMinEarlyGreenDrop = 0.10f;
+  static constexpr float kMinReplayGreenDrop = 0.15f;
+  static constexpr float kStrongGreenDrop = 0.35f;
 
   static constexpr float kLowFieldVisibility = 0.25f;
-  static constexpr float kVeryLowFieldVisibility = 0.15f;
-  static constexpr float kReplayMinFieldGood = 0.30f;
+  static constexpr float kVeryLowFieldVisibility = 0.18f;
+  static constexpr float kReplayMinFieldGood = 0.35f;
+  static constexpr float kMinFieldBeforeForReplay = 0.45f;
 
-  static constexpr double kMinLowGreenDurationSec = 0.75;
-  static constexpr double kStrongLowGreenDurationSec = 1.75;
+  static constexpr double kMinLowGreenDurationSec = 0.25;
+  static constexpr double kStrongLowGreenDurationSec = 0.75;
 
-  static constexpr float kMinVisualScore = 0.40f;
+  static constexpr float kMinVisualScore = 0.35f;
 
   static float clamp01(float x) { return std::clamp(x, 0.0f, 1.0f); }
 
